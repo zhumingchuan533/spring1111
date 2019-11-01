@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: eureka-server
+     
+#server:
+ # port: 2001
+  
+eureka:
+  server:
+    enable-self-preservation: false
+#  instence:
+ #   hostname: eureka1
+#  client:
+ #   register-with-eureka: false
+ #   fetch-registry: false
+    
+    
+---
+spring:
+  profiles: eureka1
+  
+server:
+  port: 2001
+  
+eureka:
+  instance:
+    hostname: eureka1
+
+#设置eureka像每一台服务器注册
+  client:
+    service-url:
+      defaultZone: http://eureka2:2002/eureka
+      
+
+
+
+
+---
+spring:
+  profiles: eureka2
+  
+server:
+  port: 2002
+  
+eureka:
+  instance:
+    hostname: eureka2
+
+#设置eureka像每一台服务器注册
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka
