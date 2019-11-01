@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: hystrix  #降级
+    
+server:
+  port: 3001
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka
+      
+ribbon:
+  MaxAutoRetriesNextServer: 2  #向下一台服务器重试次数
+  MaxAutoRetries: 1 #单台服务器重新请求一次
+  OkToRetryOnAllOperations: true
+  
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000  #hystrix超时 应比ribbon最多请求次数超时要长 否则ribbon重试将无意义
+            
+#配置数据监控  断路器仪表盘   记得家依赖   http://localhost:3001/actuator/env   http://localhost:3001/actuator   http://localhost:3001/actuator/beans(可查询spring所有对象)
+management:
+  endpoints:
+    web:
+      exposure:
+       include: hystrix.stream
+       # include: "*"  #暴露全部监控端点
+        
+
