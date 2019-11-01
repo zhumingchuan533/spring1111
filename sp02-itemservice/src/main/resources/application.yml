@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: item-service
+    
+#server:
+ # port: 8001
+  
+
+      
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka #像eureka服务器注册
+ #配置服务提供者集群     还要配置 open config
+---
+spring:
+  profiles: item1
+  
+server:
+  port: 8001
+  
+---
+spring:
+  profiles: item2
+  
+server:
+  port: 8002
